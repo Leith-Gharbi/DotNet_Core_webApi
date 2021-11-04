@@ -1,0 +1,2 @@
+﻿1) add-migration initialDatabaseMigration
+2) update-database 
