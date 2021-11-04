@@ -1,7 +1,9 @@
+using DotNet_Core_webApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +18,12 @@ namespace DotNet_Core_webApi
 {
     public class Startup
     {
+
+        public string ConnectionString { get; set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ConnectionString = configuration.GetConnectionString("DefaultConnectionString");
         }
 
         public IConfiguration Configuration { get; }
@@ -28,6 +33,10 @@ namespace DotNet_Core_webApi
         {
 
             services.AddControllers();
+
+            // Configure DBContext with PostgeSQL 
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(ConnectionString));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotNet_Core_webApi", Version = "v1" });
