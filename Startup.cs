@@ -63,6 +63,7 @@ namespace DotNet_Core_webApi
             {
                 endpoints.MapControllers();
             });
+            AppDbInitializer.Seed(app);
         }
     }
 }
