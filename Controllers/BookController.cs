@@ -38,5 +38,12 @@ namespace DotNet_Core_webApi.Controllers
             var BookById = _booksService.GetBookById(id);
             return Ok(BookById);
         }
+
+        [HttpPut("update-book-by-id/{id}")]
+        public IActionResult UpdateBookById(int id , [FromBody] BookVM book)
+        {
+            var updatedbook = _booksService.UpdateBookById(id, book);
+            return Ok(updatedbook);
+        }
     }
 }
