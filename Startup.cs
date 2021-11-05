@@ -1,4 +1,5 @@
 using DotNet_Core_webApi.Data;
+using DotNet_Core_webApi.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +37,8 @@ namespace DotNet_Core_webApi
 
             // Configure DBContext with PostgeSQL 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(ConnectionString));
+            // Configure the services 
+            services.AddTransient<BooksService>();
 
             services.AddSwaggerGen(c =>
             {
