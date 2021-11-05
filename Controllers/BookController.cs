@@ -25,5 +25,18 @@ namespace DotNet_Core_webApi.Controllers
             _booksService.AddBook(book);
             return Ok();
         }
+
+        [HttpGet("get-all-books")]
+        public IActionResult GetAllBooks()
+        {
+            var allBooks =_booksService.GetAllBooks();
+            return Ok(allBooks);
+        }
+        [HttpGet("get-book_by_id/{id}")]
+        public IActionResult GetBookById(int id)
+        {
+            var BookById = _booksService.GetBookById(id);
+            return Ok(BookById);
+        }
     }
 }
