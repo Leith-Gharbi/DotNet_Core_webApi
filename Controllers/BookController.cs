@@ -22,7 +22,7 @@ namespace DotNet_Core_webApi.Controllers
         [HttpPost("add-book")]
         public IActionResult AddBook([FromBody] BookVM book)
         {
-            _booksService.AddBook(book);
+            _booksService.AddBookWithAuthors(book);
             return Ok();
         }
 

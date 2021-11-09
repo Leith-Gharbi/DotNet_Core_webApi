@@ -15,7 +15,7 @@ namespace DotNet_Core_webApi.Data.Services
             _context = context;
         }
 
-        public void AddBook(BookVM book)
+        public void AddBookWithAuthors(BookVM book)
         {
             var _book = new Book()
             {
@@ -25,12 +25,21 @@ namespace DotNet_Core_webApi.Data.Services
                 DateRead =book.IsRead ? book.DateRead.Value: null,
                 Rate = book.IsRead ? book.Rate.Value :null,
                 Genre = book.Genre,
-                Author=book.Author,
                 CoverUrl = book.CoverUrl,
                 DateAdded = DateTime.Now,
+                PublisherId = book.PublisherId
             };
             _context.Books.Add(_book);
             _context.SaveChanges();
+            foreach (var id in book.AuthorIds)
+            {
+                var _book_author = new Book_Author()
+                {
+                    BookId = _book.Id,
+                    AutherId = id
+                };
+                _context.Book_Authors.Add(_book_author);
+            }
         }
 
         public List<Book> GetAllBooks() =>   _context.Books.ToList();
@@ -50,7 +59,6 @@ namespace DotNet_Core_webApi.Data.Services
                 _book.DateRead = book.IsRead ? book.DateRead.Value : null;
                 _book.Rate = book.IsRead ? book.Rate.Value : null;
                 _book.Genre = book.Genre;
-                _book.Author = book.Author;
                 _book.CoverUrl = book.CoverUrl;
                 _book.DateAdded = DateTime.Now;
                 _context.SaveChanges();

@@ -26,7 +26,6 @@ namespace DotNet_Core_webApi.Data
                         DateRead = DateTime.Now.AddDays(-10),
                         Rate = 4,
                         Genre = "Biography",
-                        Author = "First Author",
                         CoverUrl = "https ....",
                         DateAdded = DateTime.Now,
                     },
@@ -36,7 +35,6 @@ namespace DotNet_Core_webApi.Data
                         Description = "2nd Book Description",
                         IsRead = false,
                         Genre = "Biography",
-                        Author = "Seconde Author",
                         CoverUrl = "https ....",
                         DateAdded = DateTime.Now,
                     });
