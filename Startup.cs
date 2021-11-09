@@ -39,6 +39,8 @@ namespace DotNet_Core_webApi
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(ConnectionString));
             // Configure the services 
             services.AddTransient<BooksService>();
+            services.AddTransient<PublishersService>();
+            services.AddTransient<AuthorsService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -66,7 +68,7 @@ namespace DotNet_Core_webApi
             {
                 endpoints.MapControllers();
             });
-            AppDbInitializer.Seed(app);
+          //  AppDbInitializer.Seed(app);
         }
     }
 }
