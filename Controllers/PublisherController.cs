@@ -26,6 +26,14 @@ namespace DotNet_Core_webApi.Controllers
             return Ok();
         }
 
+        [HttpGet("get-publisher-books-with-authors/{id}")]
+        public ActionResult GetPublisherData(int id )
+        {
+            var _response = _publishersServices.GetPublisherData(id);
+            return Ok(_response); 
+
+
+        }
 
     }
 }

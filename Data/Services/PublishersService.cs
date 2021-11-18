@@ -24,5 +24,20 @@ namespace DotNet_Core_webApi.Data.Services
             _context.publishers.Add(_publisher);
             _context.SaveChanges();
         }
+
+
+        public PublisherWithBooksAndAuthorsVM GetPublisherData(int publisherId)
+        {
+            var _publisherData = _context.publishers.Where(n => n.Id == publisherId).Select(n => new PublisherWithBooksAndAuthorsVM()
+            {
+                Name = n.Name,
+                BookAuthors = n.Books.Select(n => new BookAuthorVM()
+                {
+                    BookName = n.Title,
+                    BookAuthors = n.Book_Author.Select(n => n.Author.FullName).ToList()
+                }).ToList()
+            }).FirstOrDefault();
+            return _publisherData;
+        }
     }
 }
