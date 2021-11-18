@@ -24,5 +24,16 @@ namespace DotNet_Core_webApi.Data.Services
             _context.Authors.Add(_author);
             _context.SaveChanges();
         }
+
+        public AuthorWithBooksVM GetAutherWithBooks(int autherId)
+        {
+            var _author = _context.Authors.Where(n => n.Id == autherId).Select(n => new AuthorWithBooksVM()
+            {
+                FullName = n.FullName,
+                BookTitles = n.Book_Author.Select(n => n.Book.Title).ToList()
+            }).FirstOrDefault();
+
+            return _author;
+        }
     }
 }

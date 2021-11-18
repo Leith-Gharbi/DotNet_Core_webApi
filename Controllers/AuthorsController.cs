@@ -28,5 +28,12 @@ namespace DotNet_Core_webApi.Controllers
             return Ok();
         }
 
+        [HttpGet("get-auther-with-books-by-id/{id}")]
+        public IActionResult GetAutherWithBooks(int id)
+        {
+           var response= _authorsService.GetAutherWithBooks(id);
+            return Ok(response);
+        }
+
     }
 }
