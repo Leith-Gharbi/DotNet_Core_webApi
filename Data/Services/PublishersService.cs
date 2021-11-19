@@ -15,7 +15,7 @@ namespace DotNet_Core_webApi.Data.Services
             _context = context;
         }
 
-        public void  AddPublisher (PublisherVM publisherVM)
+        public Publisher  AddPublisher (PublisherVM publisherVM)
         {
             var _publisher = new Publisher()
             {
@@ -23,9 +23,9 @@ namespace DotNet_Core_webApi.Data.Services
             };
             _context.publishers.Add(_publisher);
             _context.SaveChanges();
+            return _publisher;
         }
-
-
+        public Publisher GetPublisherById(int id) => _context.publishers.FirstOrDefault(n => n.Id == id);
         public PublisherWithBooksAndAuthorsVM GetPublisherData(int publisherId)
         {
             var _publisherData = _context.publishers.Where(n => n.Id == publisherId).Select(n => new PublisherWithBooksAndAuthorsVM()

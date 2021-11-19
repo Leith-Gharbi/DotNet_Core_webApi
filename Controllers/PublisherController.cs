@@ -20,10 +20,10 @@ namespace DotNet_Core_webApi.Controllers
             _publishersServices = publishersService;
         }
         [HttpPost("add-publisher")]
-        public IActionResult AddAuthor([FromBody] PublisherVM publisherVM)
+        public IActionResult AddBook([FromBody] PublisherVM publisherVM)
         {
-            _publishersServices.AddPublisher(publisherVM);
-            return Ok();
+            var newPublisher = _publishersServices.AddPublisher(publisherVM);
+            return Created(nameof(AddBook),newPublisher);
         }
 
         [HttpGet("get-publisher-books-with-authors/{id}")]
@@ -33,6 +33,17 @@ namespace DotNet_Core_webApi.Controllers
             return Ok(_response); 
 
 
+        }   
+        [HttpGet("get-publisher-by_id/{id}")]
+        public ActionResult GetPublisherById(int id )
+        {
+            var _response = _publishersServices.GetPublisherById(id);
+            if (_response!= null)
+            {
+                return Ok(_response);
+            }
+            return NotFound();
+             
         }
         [HttpDelete("delete-publisher-by-id/{id}")]
         public IActionResult DeletePublisherById(int id)
