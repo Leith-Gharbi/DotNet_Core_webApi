@@ -1,5 +1,6 @@
 ﻿using DotNet_Core_webApi.Data.Services;
 using DotNet_Core_webApi.Data.ViewModels;
+using DotNet_Core_webApi.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,10 +21,23 @@ namespace DotNet_Core_webApi.Controllers
             _publishersServices = publishersService;
         }
         [HttpPost("add-publisher")]
-        public IActionResult AddBook([FromBody] PublisherVM publisherVM)
+        public IActionResult AddPublisher([FromBody] PublisherVM publisherVM)
         {
-            var newPublisher = _publishersServices.AddPublisher(publisherVM);
-            return Created(nameof(AddBook),newPublisher);
+            try
+            {
+                var newPublisher = _publishersServices.AddPublisher(publisherVM);
+                return Created(nameof(AddPublisher), newPublisher);
+            }
+            catch (PublisherNameException ex) {
+                return BadRequest($"{ex.Message}, Publisher name : {ex.PublisherName} ");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+           
         }
 
         [HttpGet("get-publisher-books-with-authors/{id}")]

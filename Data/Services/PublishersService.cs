@@ -1,8 +1,10 @@
 ﻿using DotNet_Core_webApi.Data.Models;
 using DotNet_Core_webApi.Data.ViewModels;
+using DotNet_Core_webApi.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DotNet_Core_webApi.Data.Services
@@ -17,6 +19,10 @@ namespace DotNet_Core_webApi.Data.Services
 
         public Publisher  AddPublisher (PublisherVM publisherVM)
         {
+            if (StringStarsWithNumber(publisherVM.Name))
+            {
+                throw new PublisherNameException("Name starts with number",publisherVM.Name);
+            }
             var _publisher = new Publisher()
             {
                 Name = publisherVM.Name
@@ -47,7 +53,11 @@ namespace DotNet_Core_webApi.Data.Services
             {
                 _context.publishers.Remove(_publisher);
                 _context.SaveChanges();
+            } else
+            {
+                throw new Exception($"The publisher with id : {id} does not exist ");
             }
         }
+         private bool StringStarsWithNumber(string name) => (Regex.IsMatch(name, @"^\d")) ;
     }
 }
