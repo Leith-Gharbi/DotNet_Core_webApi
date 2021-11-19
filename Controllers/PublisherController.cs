@@ -48,9 +48,25 @@ namespace DotNet_Core_webApi.Controllers
         [HttpDelete("delete-publisher-by-id/{id}")]
         public IActionResult DeletePublisherById(int id)
         {
-            _publishersServices.DeletePublisherById(id);
-            return Ok();
+          
+            try
+            {
+                _publishersServices.DeletePublisherById(id);
+                return Ok();
+            }
+            catch (ArithmeticException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                string stopHere = "";
+            }
         } 
     }
 }
