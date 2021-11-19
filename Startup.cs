@@ -1,5 +1,6 @@
 using DotNet_Core_webApi.Data;
 using DotNet_Core_webApi.Data.Services;
+using DotNet_Core_webApi.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -64,6 +65,9 @@ namespace DotNet_Core_webApi
 
             app.UseAuthorization();
 
+            //Exception Handling 
+
+            app.ConfigureBuildInExceptionHandler();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
