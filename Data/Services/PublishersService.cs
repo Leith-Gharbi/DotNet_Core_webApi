@@ -39,5 +39,15 @@ namespace DotNet_Core_webApi.Data.Services
             }).FirstOrDefault();
             return _publisherData;
         }
+
+        public void DeletePublisherById(int id)
+        {
+            var _publisher = _context.publishers.FirstOrDefault(n => n.Id == id);
+            if(_publisher != null)
+            {
+                _context.publishers.Remove(_publisher);
+                _context.SaveChanges();
+            }
+        }
     }
 }
