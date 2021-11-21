@@ -35,5 +35,12 @@ namespace DotNet_Core_webApi.Exceptions
             });
             });
         }
+    
+
+        public static void ConfigureCustomExceptionHandler(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<CustomExceptionMiddleware>();
+        }
+    
     }
 }

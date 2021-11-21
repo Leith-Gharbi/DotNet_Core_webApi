@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DotNet_Core_webApi.Data.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace DotNet_Core_webApi.Exceptions
 
             try
             {
-
+                await _next(httpContext);
             }
             catch (Exception ex)
             {
@@ -35,6 +36,13 @@ namespace DotNet_Core_webApi.Exceptions
         {
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             httpContext.Response.ContentType = "application/json";
+            var response = new ErrorVM()
+            {
+                StatusCode = httpContext.Response.StatusCode,
+                Message = "Internal Server Error from the custom middleware",
+                Path = "path-goes-here "
+            };
+            return httpContext.Response.WriteAsync(response.ToString());
         }
     }
 }

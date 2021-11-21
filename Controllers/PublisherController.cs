@@ -52,7 +52,7 @@ namespace DotNet_Core_webApi.Controllers
         public ActionResult GetPublisherById(int id )
         {
 
-            throw new Exception("this is an exception that will be handled by middeleware ");
+            //throw new Exception("this is an exception that will be handled by middeleware ");
             var _response = _publishersServices.GetPublisherById(id);
             if (_response!= null)
             {

@@ -67,7 +67,10 @@ namespace DotNet_Core_webApi
 
             //Exception Handling 
 
-            app.ConfigureBuildInExceptionHandler();
+             app.ConfigureBuildInExceptionHandler();
+            //app.ConfigureCustomExceptionHandler();
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
