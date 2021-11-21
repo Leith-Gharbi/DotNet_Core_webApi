@@ -1,4 +1,5 @@
-﻿using DotNet_Core_webApi.Data.Models;
+﻿using DotNet_Core_webApi.ActionResults;
+using DotNet_Core_webApi.Data.Models;
 using DotNet_Core_webApi.Data.Services;
 using DotNet_Core_webApi.Data.ViewModels;
 using DotNet_Core_webApi.Exceptions;
@@ -29,7 +30,8 @@ namespace DotNet_Core_webApi.Controllers
                 var newPublisher = _publishersServices.AddPublisher(publisherVM);
                 return Created(nameof(AddPublisher), newPublisher);
             }
-            catch (PublisherNameException ex) {
+            catch (PublisherNameException ex)
+            {
                 return BadRequest($"{ex.Message}, Publisher name : {ex.PublisherName} ");
             }
             catch (Exception ex)
@@ -38,35 +40,47 @@ namespace DotNet_Core_webApi.Controllers
                 return BadRequest(ex.Message);
             }
 
-           
+
         }
 
         [HttpGet("get-publisher-books-with-authors/{id}")]
-        public IActionResult GetPublisherData(int id )
+        public IActionResult GetPublisherData(int id)
         {
             var _response = _publishersServices.GetPublisherData(id);
-            return Ok(_response); 
+            return Ok(_response);
 
 
-        }   
+        }
         [HttpGet("get-publisher-by_id/{id}")]
-        public ActionResult<Publisher> GetPublisherById(int id )
+       // public ActionResult<Publisher> GetPublisherById(int id)
+        public CustomActionResult GetPublisherById(int id)
         {
 
             //throw new Exception("this is an exception that will be handled by middeleware ");
             var _response = _publishersServices.GetPublisherById(id);
-            if (_response!= null)
+            if (_response != null)
             {
-                return _response;
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Publisher = _response
+                };
+
+                return new CustomActionResult(_responseObj);
+               // return _response;
                 //return Ok(_response);
+            }else {
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Exception = new Exception("this is comming from publisher controller")
+            };
+
+            return new CustomActionResult(_responseObj);
             }
-            return NotFound();
-             
         }
         [HttpDelete("delete-publisher-by-id/{id}")]
         public IActionResult DeletePublisherById(int id)
         {
-          
+
             try
             {
                 _publishersServices.DeletePublisherById(id);
@@ -85,6 +99,6 @@ namespace DotNet_Core_webApi.Controllers
             {
                 string stopHere = "";
             }
-        } 
+        }
     }
 }
