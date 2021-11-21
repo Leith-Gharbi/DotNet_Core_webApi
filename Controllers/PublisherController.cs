@@ -1,4 +1,5 @@
-﻿using DotNet_Core_webApi.Data.Services;
+﻿using DotNet_Core_webApi.Data.Models;
+using DotNet_Core_webApi.Data.Services;
 using DotNet_Core_webApi.Data.ViewModels;
 using DotNet_Core_webApi.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +42,7 @@ namespace DotNet_Core_webApi.Controllers
         }
 
         [HttpGet("get-publisher-books-with-authors/{id}")]
-        public ActionResult GetPublisherData(int id )
+        public IActionResult GetPublisherData(int id )
         {
             var _response = _publishersServices.GetPublisherData(id);
             return Ok(_response); 
@@ -49,14 +50,15 @@ namespace DotNet_Core_webApi.Controllers
 
         }   
         [HttpGet("get-publisher-by_id/{id}")]
-        public ActionResult GetPublisherById(int id )
+        public ActionResult<Publisher> GetPublisherById(int id )
         {
 
             //throw new Exception("this is an exception that will be handled by middeleware ");
             var _response = _publishersServices.GetPublisherById(id);
             if (_response!= null)
             {
-                return Ok(_response);
+                return _response;
+                //return Ok(_response);
             }
             return NotFound();
              
