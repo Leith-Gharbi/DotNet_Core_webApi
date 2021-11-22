@@ -5,6 +5,7 @@ using DotNet_Core_webApi.Data.ViewModels;
 using DotNet_Core_webApi.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace DotNet_Core_webApi.Controllers
     {
 
         private PublishersService _publishersServices;
-        public PublisherController(PublishersService publishersService)
+        private readonly ILogger<PublisherController> _logger;
+        public PublisherController(PublishersService publishersService , ILogger<PublisherController> logger)
         {
+            _logger = logger;
             _publishersServices = publishersService;
         }
 
@@ -30,6 +33,7 @@ namespace DotNet_Core_webApi.Controllers
    
             try
             {
+                _logger.LogInformation("This is just a log in GetAllPublishers()");
                 var _result = _publishersServices.GetAllPublishers(sortBy , searchString , pageNumber);
                 return Ok(_result);
             }
