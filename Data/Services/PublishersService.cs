@@ -32,7 +32,7 @@ namespace DotNet_Core_webApi.Data.Services
             return _publisher;
         }
 
-        internal List<Publisher> GetAllPublishers(string sortBy) { 
+        internal List<Publisher> GetAllPublishers(string sortBy ,string searchString) { 
 
            var allPublishers= _context.publishers.OrderBy(n=>n.Name).ToList();
             if (!string.IsNullOrEmpty(sortBy))
@@ -47,6 +47,11 @@ namespace DotNet_Core_webApi.Data.Services
                         break;
                 }
             }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allPublishers = allPublishers.Where(n => n.Name.Contains(searchString,StringComparison.CurrentCultureIgnoreCase)).ToList(); 
+        }
             return allPublishers;
         }
 
