@@ -25,12 +25,12 @@ namespace DotNet_Core_webApi.Controllers
 
 
         [HttpGet("get-all-publishers")]
-        public IActionResult GetAllPublishers(string sortBy ,string searchString )
+        public IActionResult GetAllPublishers(string sortBy ,string searchString,int pageNumber )
         {
    
             try
             {
-                var _result = _publishersServices.GetAllPublishers(sortBy , searchString );
+                var _result = _publishersServices.GetAllPublishers(sortBy , searchString , pageNumber);
                 return Ok(_result);
             }
             catch (Exception)

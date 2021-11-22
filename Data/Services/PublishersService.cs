@@ -1,4 +1,5 @@
 ﻿using DotNet_Core_webApi.Data.Models;
+using DotNet_Core_webApi.Data.Paging;
 using DotNet_Core_webApi.Data.ViewModels;
 using DotNet_Core_webApi.Exceptions;
 using System;
@@ -32,7 +33,7 @@ namespace DotNet_Core_webApi.Data.Services
             return _publisher;
         }
 
-        internal List<Publisher> GetAllPublishers(string sortBy ,string searchString) { 
+        internal List<Publisher> GetAllPublishers(string sortBy ,string searchString ,int? pageNumber) { 
 
            var allPublishers= _context.publishers.OrderBy(n=>n.Name).ToList();
             if (!string.IsNullOrEmpty(sortBy))
@@ -52,6 +53,11 @@ namespace DotNet_Core_webApi.Data.Services
             {
                 allPublishers = allPublishers.Where(n => n.Name.Contains(searchString,StringComparison.CurrentCultureIgnoreCase)).ToList(); 
         }
+
+            //Paging 
+            int pageSize = 5;
+            allPublishers = PaginatedList<Publisher>.Create(allPublishers.AsQueryable(), pageNumber ?? 1, pageSize);
+
             return allPublishers;
         }
 
