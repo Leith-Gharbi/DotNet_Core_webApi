@@ -42,7 +42,12 @@ namespace DotNet_Core_webApi
             services.AddTransient<BooksService>();
             services.AddTransient<PublishersService>();
             services.AddTransient<AuthorsService>();
-
+            // versioning
+            services.AddApiVersioning( config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.AssumeDefaultVersionWhenUnspecified = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotNet_Core_webApi", Version = "v1" });
