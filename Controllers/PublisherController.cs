@@ -22,6 +22,25 @@ namespace DotNet_Core_webApi.Controllers
         {
             _publishersServices = publishersService;
         }
+
+
+        [HttpGet("get-all-publishers")]
+        public IActionResult GetAllPublishers(string sortBy)
+        {
+   
+            try
+            {
+                var _result = _publishersServices.GetAllPublishers(sortBy);
+                return Ok(_result);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Sorry, we could Not load the publishers");
+            }
+        }
+
+
         [HttpPost("add-publisher")]
         public IActionResult AddPublisher([FromBody] PublisherVM publisherVM)
         {

@@ -31,6 +31,25 @@ namespace DotNet_Core_webApi.Data.Services
             _context.SaveChanges();
             return _publisher;
         }
+
+        internal List<Publisher> GetAllPublishers(string sortBy) { 
+
+           var allPublishers= _context.publishers.OrderBy(n=>n.Name).ToList();
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy)
+                {
+                    case "name_desc":
+                        allPublishers = allPublishers.OrderByDescending(n => n.Name).ToList();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            return allPublishers;
+        }
+
         public Publisher GetPublisherById(int id) => _context.publishers.FirstOrDefault(n => n.Id == id);
         public PublisherWithBooksAndAuthorsVM GetPublisherData(int publisherId)
         {
